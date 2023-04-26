@@ -126,7 +126,7 @@ public class CatalogPageTest {
     }
 
     @Test
-    void checkPreviewStructureForEachTradeItemOnPageWithListOfGoods() throws InterruptedException {
+    void checkPreviewStructureForEachTradeItemOnPageWithListOfGoods() {
         driver.get("https://onliner.by");
         WebElement catalogLink = findElement(xpath("//ul[@class='b-main-navigation']//span[text()='Каталог']/parent::*"));
         catalogLink.click();
@@ -145,23 +145,32 @@ public class CatalogPageTest {
         headPhoneCategory.click();
 
         List<WebElement> productCards = findElements(xpath("//div[contains(@class,'schema-product__group')]"));
-        List<String> productTitles = productCards.stream()
-                .map(productCard -> productCard.findElement(xpath("//span[contains(@data-bind,'product.full_name')]")))
+        List<String> productCardTitles = findElements(xpath("//span[contains(@data-bind,'product.full_name')]")).stream()
                 .map(WebElement::getText)
                 .toList();
-        List<String> productPrices = productCards.stream()
-                .map(productCard -> productCard.findElement(xpath("//span[contains(@data-bind,'data.prices')]")).getText())
+        List<String> productPrices = findElements(xpath("//div[not(contains(@class,'schema-product_children'))]" +
+                                                        "/div[contains(@class,'schema-product__part_2')]" +
+                                                        "/div[contains(@class,'schema-product__part_3')]" +
+                                                        "//span[contains(@data-bind,'root.format.minPrice')]")).stream()
+                .map(WebElement::getText)
                 .toList();
-        List<String> productDescriptions = productCards.stream()
-                .map(productCard -> productCard.findElement(xpath("//span[contains(@data-bind,'product.description')]")).getText())
+        List<String> productDescriptions = findElements(xpath("//span[contains(@data-bind,'product.description')]")).stream()
+                .map(WebElement::getText)
                 .toList();
-        List<String> productRatings = productCards.stream()
-                .map(productCard -> productCard.findElement(xpath("//span[contains(@data-bind,'product.reviews.rating')]")).getText())
+        List<String> productRatings = findElements(xpath("//span[contains(@data-bind,'product.reviews.rating')]")).stream()
+                .map(WebElement::getText)
                 .toList();
-        List<WebElement> productCheckBoxes = productCards.stream()
-                .map(productCard -> productCard.findElement(xpath("//div[contains(@data-bind,'schema-product__compare')]")))
-                .toList();
-        productCheckBoxes.forEach(System.out::println);
+        List<WebElement> productImages = findElements(xpath("//div[@class='schema-product__group']/div/div/div[@class='schema-product__image']"));
+        List<WebElement> productCheckBoxes = findElements(xpath("//div[not(contains(@class,'schema-product_children'))]" +
+                                                                "/div[contains(@class,'schema-product__part_1')]" +
+                                                                "/div[@class='schema-product__compare']"));
+
+        assertThat(productCardTitles).hasSize(productCards.size());
+        assertThat(productPrices).hasSize(productCards.size());
+        assertThat(productDescriptions).hasSize(productCards.size());
+        assertThat(productRatings).hasSize(productCards.size());
+        assertThat(productCheckBoxes).hasSize(productCards.size());
+        assertThat(productImages).hasSize(productCards.size());
     }
 
     private WebElement findElement(By by) {
