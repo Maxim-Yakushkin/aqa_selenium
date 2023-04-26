@@ -1,4 +1,4 @@
-package com.yakushkin.onliner.framework;
+package com.yakushkin.framework;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;

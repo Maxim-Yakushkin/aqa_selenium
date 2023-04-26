@@ -1,6 +1,6 @@
 package com.yakushkin.onliner;
 
-import com.yakushkin.onliner.framework.DriverManager;
+import com.yakushkin.framework.DriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -15,7 +15,7 @@ import org.testng.annotations.Test;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.yakushkin.onliner.framework.Driver.EDGE;
+import static com.yakushkin.framework.Driver.EDGE;
 import static java.time.Duration.ofSeconds;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.openqa.selenium.By.xpath;
@@ -35,7 +35,7 @@ public class CatalogPageTest {
     @AfterClass
     void closeAndClean() {
         DriverManager.closeBrowser();
-        System.clearProperty("webdriver.edge");
+        System.clearProperty("webDriverName");
     }
 
     @Test
