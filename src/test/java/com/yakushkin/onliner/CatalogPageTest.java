@@ -3,7 +3,7 @@ package com.yakushkin.onliner;
 import com.yakushkin.framework.DriverManager;
 import com.yakushkin.pageobject.onliner.CatalogPage;
 import com.yakushkin.pageobject.onliner.MainPage;
-import com.yakushkin.util.UtilElement;
+import com.yakushkin.util.UtilWebElement;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -101,7 +101,7 @@ public class CatalogPageTest {
 
     @Test
     void checkPreviewStructureForEachTradeItemOnPageWithListOfGoods() {
-        final UtilElement utilElement = new UtilElement();
+        final UtilWebElement utilWebElement = new UtilWebElement();
         final List<WebElement> productCards = mainPage
                 .open()
                 .goToCatalogSection()
@@ -110,25 +110,25 @@ public class CatalogPageTest {
                 .clickOnHeadPhoneCategory()
                 .getProductCards();
 
-        final List<String> productCardTitles = utilElement.findElements(xpath("//span[contains(@data-bind,'product.full_name')]")).stream()
+        final List<String> productCardTitles = utilWebElement.findElements(xpath("//span[contains(@data-bind,'product.full_name')]")).stream()
                 .map(WebElement::getText)
                 .toList();
-        final List<String> productPrices = utilElement.findElements(xpath("//div[not(contains(@class,'schema-product_children'))]" +
-                                                                          "/div[contains(@class,'schema-product__part_2')]" +
-                                                                          "/div[contains(@class,'schema-product__part_3')]" +
-                                                                          "//span[contains(@data-bind,'root.format.minPrice')]")).stream()
+        final List<String> productPrices = utilWebElement.findElements(xpath("//div[not(contains(@class,'schema-product_children'))]" +
+                                                                             "/div[contains(@class,'schema-product__part_2')]" +
+                                                                             "/div[contains(@class,'schema-product__part_3')]" +
+                                                                             "//span[contains(@data-bind,'root.format.minPrice')]")).stream()
                 .map(WebElement::getText)
                 .toList();
-        final List<String> productDescriptions = utilElement.findElements(xpath("//span[contains(@data-bind,'product.description')]")).stream()
+        final List<String> productDescriptions = utilWebElement.findElements(xpath("//span[contains(@data-bind,'product.description')]")).stream()
                 .map(WebElement::getText)
                 .toList();
-        final List<String> productRatings = utilElement.findElements(xpath("//span[contains(@data-bind,'product.reviews.rating')]")).stream()
+        final List<String> productRatings = utilWebElement.findElements(xpath("//span[contains(@data-bind,'product.reviews.rating')]")).stream()
                 .map(WebElement::getText)
                 .toList();
-        final List<WebElement> productImages = utilElement.findElements(xpath("//div[@class='schema-product__group']/div/div/div[@class='schema-product__image']"));
-        final List<WebElement> productCheckBoxes = utilElement.findElements(xpath("//div[not(contains(@class,'schema-product_children'))]" +
-                                                                                  "/div[contains(@class,'schema-product__part_1')]" +
-                                                                                  "/div[@class='schema-product__compare']"));
+        final List<WebElement> productImages = utilWebElement.findElements(xpath("//div[@class='schema-product__group']/div/div/div[@class='schema-product__image']"));
+        final List<WebElement> productCheckBoxes = utilWebElement.findElements(xpath("//div[not(contains(@class,'schema-product_children'))]" +
+                                                                                     "/div[contains(@class,'schema-product__part_1')]" +
+                                                                                     "/div[@class='schema-product__compare']"));
 
         assertThat(productCardTitles).hasSize(productCards.size());
         assertThat(productPrices).hasSize(productCards.size());
