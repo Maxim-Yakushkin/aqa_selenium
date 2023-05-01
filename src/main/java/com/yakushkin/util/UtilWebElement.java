@@ -1,13 +1,10 @@
 package com.yakushkin.util;
 
 import com.yakushkin.framework.DriverManager;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.interactions.Actions;
 
-import java.time.Duration;
 import java.util.List;
 
 public class UtilWebElement {
@@ -18,13 +15,15 @@ public class UtilWebElement {
         this.driver = DriverManager.getWebDriver();
     }
 
-    public WebElement findElement(By by) {
-        final WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
-        return wait.until(ExpectedConditions.visibilityOfElementLocated(by));
+    public void moveToElement(WebElement element) {
+        new Actions(driver)
+                .moveToElement(element)
+                .perform();
     }
 
-    public List<WebElement> findElements(By by) {
-        final WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
-        return wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(by));
+    public static List<String> getTextFromWebElementList(List<WebElement> webElements) {
+        return webElements.stream()
+                .map(WebElement::getText)
+                .toList();
     }
 }
