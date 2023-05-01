@@ -1,6 +1,7 @@
 package com.yakushkin.pageobject.onliner;
 
 import com.yakushkin.framework.DriverManager;
+import org.assertj.core.api.SoftAssertions;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -81,9 +82,11 @@ public class CatalogPageTest {
         final List<String> categoryCountOfGoods = getPartOfCategoryDescription(indexCountOfItemsInCategoryDescription, categories);
         final List<String> categoryStartPrice = getPartOfCategoryDescription(indexMinPriceOfItemInCategoryDescription, categories);
 
-        assertThat(categoryTitles).as(ACTUAL_AND_EXPECTED_SIZE_DOESNT_MATH_MESSAGE).hasSize(categories.size());
-        assertThat(categoryCountOfGoods).as(ACTUAL_AND_EXPECTED_SIZE_DOESNT_MATH_MESSAGE).hasSize(categories.size());
-        assertThat(categoryStartPrice).as(ACTUAL_AND_EXPECTED_SIZE_DOESNT_MATH_MESSAGE).hasSize(categories.size());
+        final SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(categoryTitles).as(ACTUAL_AND_EXPECTED_SIZE_DOESNT_MATH_MESSAGE).hasSameSizeAs(categories);
+        softAssertions.assertThat(categoryCountOfGoods).as(ACTUAL_AND_EXPECTED_SIZE_DOESNT_MATH_MESSAGE).hasSameSizeAs(categories);
+        softAssertions.assertThat(categoryStartPrice).as(ACTUAL_AND_EXPECTED_SIZE_DOESNT_MATH_MESSAGE).hasSameSizeAs(categories);
+        softAssertions.assertAll();
     }
 
     @Test
@@ -102,11 +105,13 @@ public class CatalogPageTest {
         final List<WebElement> productImages = categoryPage.getProductImages();
         final List<WebElement> productCheckboxes = categoryPage.getProductCheckboxes();
 
-        assertThat(productCardTitles).as(ACTUAL_AND_EXPECTED_SIZE_DOESNT_MATH_MESSAGE).hasSize(productCards.size());
-        assertThat(productPrices).as(ACTUAL_AND_EXPECTED_SIZE_DOESNT_MATH_MESSAGE).hasSize(productCards.size());
-        assertThat(productDescriptions).as(ACTUAL_AND_EXPECTED_SIZE_DOESNT_MATH_MESSAGE).hasSize(productCards.size());
-        assertThat(productRatings).as(ACTUAL_AND_EXPECTED_SIZE_DOESNT_MATH_MESSAGE).hasSize(productCards.size());
-        assertThat(productImages).as(ACTUAL_AND_EXPECTED_SIZE_DOESNT_MATH_MESSAGE).hasSize(productCards.size());
-        assertThat(productCheckboxes).as(ACTUAL_AND_EXPECTED_SIZE_DOESNT_MATH_MESSAGE).hasSize(productCards.size());
+        final SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(productCardTitles).as(ACTUAL_AND_EXPECTED_SIZE_DOESNT_MATH_MESSAGE).hasSameSizeAs(productCards);
+        softAssertions.assertThat(productPrices).as(ACTUAL_AND_EXPECTED_SIZE_DOESNT_MATH_MESSAGE).hasSameSizeAs(productCards);
+        softAssertions.assertThat(productDescriptions).as(ACTUAL_AND_EXPECTED_SIZE_DOESNT_MATH_MESSAGE).hasSameSizeAs(productCards);
+        softAssertions.assertThat(productRatings).as(ACTUAL_AND_EXPECTED_SIZE_DOESNT_MATH_MESSAGE).hasSameSizeAs(productCards);
+        softAssertions.assertThat(productImages).as(ACTUAL_AND_EXPECTED_SIZE_DOESNT_MATH_MESSAGE).hasSameSizeAs(productCards);
+        softAssertions.assertThat(productCheckboxes).as(ACTUAL_AND_EXPECTED_SIZE_DOESNT_MATH_MESSAGE).hasSameSizeAs(productCards);
+        softAssertions.assertAll();
     }
 }
