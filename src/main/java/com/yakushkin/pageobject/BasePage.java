@@ -3,7 +3,6 @@ package com.yakushkin.pageobject;
 import com.yakushkin.framework.DriverManager;
 import com.yakushkin.util.UtilWebElement;
 import lombok.Data;
-import org.assertj.core.api.Assertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
